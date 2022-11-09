@@ -23,6 +23,24 @@ async def send_message_queshions(message):
 async def send_message_sign_up(message):
     await bot.send_message(message.from_user.id, texts["sign_up"], reply_markup=keyboard.inl_kb_mark_sign_up)
 
+async def send_message_services(message):
+    await bot.send_message(message.from_user.id, texts["services"], reply_markup=keyboard.inl_kb_mark_services)
+
+async def edit_message_service_description(call):
+    await bot.edit_message_text(
+        text = texts[call.data],
+        message_id = call.message.message_id,
+        chat_id = call.message.chat.id, 
+        reply_markup=keyboard.inl_kb_mark_service_description
+    )
+
+async def edit_message_all_services(call):
+    await bot.edit_message_text(
+        text = texts["services"],
+        message_id = call.message.message_id,
+        chat_id = call.message.chat.id, 
+        reply_markup=keyboard.inl_kb_mark_services
+    )
 
 def register_handlers(dp):
     dp.register_message_handler(send_message_start, commands=["start"])
@@ -31,3 +49,7 @@ def register_handlers(dp):
     dp.register_message_handler(send_message_contacts, lambda message: "контакты" in message.text.lower(), state=None)
     dp.register_message_handler(send_message_queshions, lambda message: "вопрос" in message.text.lower(), state=None)
     dp.register_message_handler(send_message_sign_up, lambda message: "записаться" in message.text.lower(), state=None)
+    dp.register_message_handler(send_message_services, lambda message: "услуги" in message.text.lower(), state=None)
+    dp.register_callback_query_handler(edit_message_service_description, lambda callback: callback.data in ["ser_1", "ser_2", "ser_3"], state=None)
+    dp.register_callback_query_handler(edit_message_all_services, lambda callback: callback.data == "back", state=None)
+    dp.register_callback_query_handler(send_message_sign_up, lambda callback: callback.data == "sign_up", state=None)
