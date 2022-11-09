@@ -52,4 +52,4 @@ def register_handlers(dp):
     dp.register_message_handler(send_message_services, lambda message: "услуги" in message.text.lower(), state=None)
     dp.register_callback_query_handler(edit_message_service_description, lambda callback: callback.data in ["ser_1", "ser_2", "ser_3"], state=None)
     dp.register_callback_query_handler(edit_message_all_services, lambda callback: callback.data == "back", state=None)
-    dp.register_callback_query_handler(send_message_sign_up, lambda callback: callback.data == "sign_up", state=None)
+    dp.register_callback_query_handler(send_message_sign_up, lambda callback: callback.data == "sign_up", state=None)1
